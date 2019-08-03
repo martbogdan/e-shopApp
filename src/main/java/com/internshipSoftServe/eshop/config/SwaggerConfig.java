@@ -40,23 +40,23 @@ public class SwaggerConfig {
                 .build();
     }
 
-//    Map<String, Object> container = new HashMap<>();
-//
-//    {
-//        container.put("Docket", new Docket(DocumentationType.SWAGGER_2));
-//
-//        Object docket = container.get("Docket");
-//    }
-//
-//    Object docket = container.get("Docket");
+    Map<String, Object> container = new HashMap<>();
+
+    {
+        container.put("Docket", new Docket(DocumentationType.SWAGGER_2));
+
+        Object docket = container.get("Docket");
+    }
+
+    Object docket = container.get("Docket");
 
     @Bean
     public Docket productsApi(){
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .pathMapping("/shop")
                 .select()
-                .paths(PathSelectors.regex("/api/shop.*"))
-                .build();
+                .apis(RequestHandlerSelectors.basePackage("localhost:8090"))
+                .paths(regex("/api/shop.*"))
+                .build()
+                .apiInfo(apiInfo());
     }
 }

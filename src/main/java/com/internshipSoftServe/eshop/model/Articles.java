@@ -1,5 +1,6 @@
 package com.internshipSoftServe.eshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 
@@ -9,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "articles")
-
 @Data
 public class Articles {
     @Id
@@ -20,10 +20,14 @@ public class Articles {
     @Size(max = 45)
     private String name;
 
+    @Column(length = 255)
+    @Size(max = 255)
     private String text;
 
+    @Column(name = "created_at")
     private LocalDateTime created_at;
 
+    @JsonIgnore
     @ToString.Exclude
     @ManyToOne
     private Product product;
@@ -66,5 +70,11 @@ public class Articles {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Articles(@Size(max = 45) String name, @Size(max = 255) String text, LocalDateTime created_at) {
+        this.name = name;
+        this.text = text;
+        this.created_at = created_at;
     }
 }

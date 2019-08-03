@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Api(value = "Articles", produces = MediaType.APPLICATION_JSON_VALUE)
 @Controller
 @RequestMapping(value = "/shop")
-@Api(value = "Articles", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ArticlesController {
 
     @Autowired
@@ -23,34 +23,29 @@ public class ArticlesController {
     @Autowired
     private ProductRepository productRepository;
 
-
-    @GetMapping("/articles")
     @ApiOperation(value = "Get all articles", response = Articles.class)
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok")})
+    @GetMapping("/articles")
     @ResponseBody
     public  Iterable<Articles> getAllArticles(){
         return articlesRepository.findAll();
     }
 
-    @GetMapping("/articles/{articleId}")
     @ApiOperation(value = "Get articles by id", response = Articles.class)
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok")})
+    @GetMapping("/articles/{articleId}")
     @ResponseBody
     public Articles getOneArticle(@PathVariable("articleId") long articleId){
         return articlesRepository.findById(articleId).orElse(null);
     }
 
-    @GetMapping("products/{productId}/articles")
     @ApiOperation(value = "Get articles by product id", response = Articles.class)
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok")})
+    @GetMapping("products/{productId}/articles")
     public @ResponseBody Iterable<Articles> getArticleByProduct (@ApiParam(value = "Product param id", example = "1")@PathVariable ("productId") long productId){
         Product product = productRepository.findById(productId).orElseThrow(RuntimeException::new);
         return product.getArticles();
     }
 
-    @PostMapping("/products/{productId}/articles")
     @ApiOperation(value = "Create article to product by param: id")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok")})
+    @PostMapping("/products/{productId}/articles")
     public ResponseEntity<Articles> createNewArticleToProduct(@ApiParam(value = "Product param id", example = "1")@PathVariable("productId") long productId,
                                                               @ApiParam(value = "Request body Article",required = true)@Valid @RequestBody Articles article){
         Product product = productRepository.findById(productId).orElseThrow(RuntimeException::new);
@@ -58,9 +53,8 @@ public class ArticlesController {
         return ResponseEntity.ok(articlesRepository.save(article));
     }
 
-    @PutMapping("/articles/{articleId}")
     @ApiOperation(value = "Update article")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok")})
+    @PutMapping("/articles/{articleId}")
     public ResponseEntity<Articles> updateArticle(@ApiParam(value = "Article param id", example = "1")@PathVariable("articleId") long articleId,
                                                   @ApiParam(value = "Request body Article",required = true)@RequestBody Articles article){
         return articlesRepository.findById(articleId).
@@ -73,9 +67,8 @@ public class ArticlesController {
                 }).orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/articles/{articleId}")
     @ApiOperation(value = "Delete Article by id")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok")})
+    @DeleteMapping("/articles/{articleId}")
     public void deleteArticle(@ApiParam(value = "Article param id", example = "1")@PathVariable Long articleId){
          articlesRepository.deleteById(articleId);
     }
