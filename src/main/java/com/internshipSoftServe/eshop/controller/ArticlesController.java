@@ -25,15 +25,13 @@ public class ArticlesController {
 
     @ApiOperation(value = "Get all articles", response = Articles.class)
     @GetMapping("/articles")
-    @ResponseBody
-    public  Iterable<Articles> getAllArticles(){
+    public @ResponseBody Iterable<Articles> getAllArticles(){
         return articlesRepository.findAll();
     }
 
     @ApiOperation(value = "Get articles by id", response = Articles.class)
     @GetMapping("/articles/{articleId}")
-    @ResponseBody
-    public Articles getOneArticle(@PathVariable("articleId") long articleId){
+    public @ResponseBody Articles getOneArticle(@PathVariable("articleId") long articleId){
         return articlesRepository.findById(articleId).orElse(null);
     }
 
