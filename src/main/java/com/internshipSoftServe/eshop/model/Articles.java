@@ -72,6 +72,18 @@ public class Articles {
         this.product = product;
     }
 
+    public long getProductId (){
+        return product.getId();
+    }
+    public void setProductId (long productId){
+        this.product = new Product();
+        this.product.setId(productId);
+    }
+
+
+    public Articles() {
+    }
+
     public Articles(@Size(max = 45) String name, @Size(max = 255) String text, LocalDateTime created_at) {
         this.name = name;
         this.text = text;

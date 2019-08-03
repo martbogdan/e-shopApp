@@ -23,6 +23,11 @@ public class ArticlesController {
     @Autowired
     private ProductRepository productRepository;
 
+    public ArticlesController(ArticlesRepository articlesRepository, ProductRepository productRepository) {
+        this.articlesRepository = articlesRepository;
+        this.productRepository = productRepository;
+    }
+
     @ApiOperation(value = "Get all articles", response = Articles.class)
     @GetMapping("/articles")
     public @ResponseBody Iterable<Articles> getAllArticles(){
@@ -32,7 +37,7 @@ public class ArticlesController {
     @ApiOperation(value = "Get articles by id", response = Articles.class)
     @GetMapping("/articles/{articleId}")
     public @ResponseBody Articles getOneArticle(@PathVariable("articleId") long articleId){
-        return articlesRepository.findById(articleId).orElse(null);
+        return articlesRepository.findById(articleId).orElseThrow(RuntimeException::new);
     }
 
     @ApiOperation(value = "Get articles by product id", response = Articles.class)
@@ -43,10 +48,9 @@ public class ArticlesController {
     }
 
     @ApiOperation(value = "Create article to product by param: id")
-    @PostMapping("/products/{productId}/articles")
-    public ResponseEntity<Articles> createNewArticleToProduct(@ApiParam(value = "Product param id", example = "1")@PathVariable("productId") long productId,
-                                                              @ApiParam(value = "Request body Article",required = true)@Valid @RequestBody Articles article){
-        Product product = productRepository.findById(productId).orElseThrow(RuntimeException::new);
+    @PostMapping("/articles")
+    public ResponseEntity<Articles> createNewArticleToProduct(@ApiParam(value = "Request body Article",required = true)@Valid @RequestBody Articles article){
+        Product product = productRepository.findById(article.getProductId()).orElseThrow(RuntimeException::new);
         article.setProduct(product);
         return ResponseEntity.ok(articlesRepository.save(article));
     }
@@ -67,11 +71,8 @@ public class ArticlesController {
 
     @ApiOperation(value = "Delete Article by id")
     @DeleteMapping("/articles/{articleId}")
-    public void deleteArticle(@ApiParam(value = "Article param id", example = "1")@PathVariable Long articleId){
+    public void deleteArticle(@ApiParam(value = "Article param id", example = "1")@PathVariable long articleId){
          articlesRepository.deleteById(articleId);
     }
 
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 }
