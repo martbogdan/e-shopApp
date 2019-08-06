@@ -56,7 +56,13 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Comment> comments;
 
-    public long getId() {
+    public Product(String name, double price, int quantity, String description, String photo) {
+    }
+
+	public Product() {
+	}
+
+	public long getId() {
 		return id;
 	}
 
