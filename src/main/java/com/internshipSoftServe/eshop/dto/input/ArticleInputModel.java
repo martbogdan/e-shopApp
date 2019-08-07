@@ -38,6 +38,14 @@ public class ArticleInputModel {
         this.createdAt = createdAt;
     }
 
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
+
     public static Articles of(ArticleInputModel articleInputModel){
         return new Articles(       articleInputModel.getName(),
                 articleInputModel.getText(),
