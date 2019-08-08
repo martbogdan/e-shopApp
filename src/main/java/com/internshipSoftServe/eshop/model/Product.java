@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -17,8 +18,8 @@ import javax.validation.constraints.Size;
 public class Product {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(length = 45)
     @Size(max = 45)
@@ -49,7 +50,7 @@ public class Product {
     @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Articles> articles;
+    private List<Article> articles;
     
     @ToString.Exclude
     @JsonIgnore
@@ -62,11 +63,11 @@ public class Product {
 	public Product() {
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
     
@@ -127,12 +128,14 @@ public class Product {
 		this.category.setId(categoryId);
 	}
 
-	public List<Articles> getArticles() {
+	public List<Article> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(List<Articles> articles) {
+	public void setArticles(List<Article> articles) {
 		this.articles = articles;
 	}
+
+
 }
 

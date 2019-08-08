@@ -1,17 +1,17 @@
 package com.internshipSoftServe.eshop.dto.input;
 
-import com.internshipSoftServe.eshop.model.Articles;
+import com.internshipSoftServe.eshop.model.Article;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
 public class ArticleInputModel {
     private String name;
     private String text;
-    private LocalDateTime createdAt;
+    private Date createdAt;
     private long productId;
 
     public String getName() {
@@ -30,11 +30,11 @@ public class ArticleInputModel {
         this.text = text;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -46,8 +46,8 @@ public class ArticleInputModel {
         this.productId = productId;
     }
 
-    public static Articles of(ArticleInputModel articleInputModel){
-        return new Articles(       articleInputModel.getName(),
+    public static Article of(ArticleInputModel articleInputModel){
+        return new Article(       articleInputModel.getName(),
                 articleInputModel.getText(),
                 articleInputModel.getCreatedAt()
         );
