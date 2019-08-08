@@ -29,6 +29,7 @@ public class ArticleService {
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
         articleDB.setText(article.getText());
         articleDB.setName(article.getName());
+        articleDB.setCreatedAt(article.getCreatedAt());
         articlesRepository.save(articleDB);
         return ArticleOutputModel.of(articleDB);
     }
