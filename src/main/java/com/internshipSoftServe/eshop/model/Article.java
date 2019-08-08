@@ -26,7 +26,8 @@ public class Article {
     @Size(max = 45)
     private String name;
 
-    @Size(max = 2550)
+    @Column(length = 30000)
+    @Size(max = 30000)
     private String text;
 
     @Column(name = "created_at")
